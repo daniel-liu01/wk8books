@@ -14,6 +14,7 @@ export default function BookForm({ add }) {
       author: data.get("author"),
       publisher: data.get("publisher"),
       publicationYear: data.get("publicationYear"),
+      category: data.get("pr-category"),
       language: data.get("language"),
       pages: data.get("pages"),
       url: data.get("url"),
@@ -62,6 +63,16 @@ export default function BookForm({ add }) {
                         placeholder='Year'
                     />
                 </div>
+                <div className='form-control'>
+                    <label htmlFor='pr-category' className="form-label">Category</label>
+                    <input
+                        list="categories"
+                        name="pr-category"
+                        className='form-input'
+                        placeholder="i.e. Fantasy, Romance, Etc."
+                    />
+                </div>
+
                 <div className='form-control'>
                     <label htmlFor='language' className="form-label">Language</label>
                     <input

@@ -1,3 +1,7 @@
+* {
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
 .books {
   display: flex;
   flex-direction: row;
@@ -21,6 +25,7 @@
   padding: 40px; 
   color: white; 
   border-bottom: 12px solid #a8e6cf;
+  font-family: arial;
 }
 
 .footer {

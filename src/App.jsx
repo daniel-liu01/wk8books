@@ -11,12 +11,22 @@ function App() {
   const [selectedBookId, setSelectedBookId] = useState(null);
 
   const [publisher, setPublisher] = useState('All');
+  const [category, setCategory] = useState('All');
 
   const allBooks = [...books, ...BooksData];
   const uniquePublishers = [...new Set(allBooks.map((b) => b.publisher))];
 
+  const uniqueCategories = [
+  'All',
+  ...Array.from(
+    new Set(allBooks.map((b) => b.category).filter((c) => c && c.trim() !== ''))
+  ),
+];
+
   const filteredBooks = allBooks.filter(
-    (book) => publisher === 'All' || book.publisher === publisher
+    (book) =>
+      (publisher === 'All' || book.publisher === publisher) &&
+      (category === 'All' || book.category === category)
   );
 
   function addBook(book) {
