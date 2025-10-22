@@ -1,26 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Book from './Book.jsx';
-import BooksData from './data/books.json';
 import Modal from './components/Modal.jsx';
 import BookForm from './components/BookForm.jsx';
 import Filter from './components/Filter.jsx';
 
 function App() {
-  const [books, setBooks] = useState([]);
-  const [selectedBookId, setSelectedBookId] = useState(null);
+  const [books, setBooks] = useState(() => {
+    const stored = localStorage.getItem('books');
+    return stored ? JSON.parse(stored) : [];
+  });
 
+  const [selectedBookId, setSelectedBookId] = useState(null);
   const [publisher, setPublisher] = useState('All');
   const [category, setCategory] = useState('All');
 
-  const allBooks = [...books];
+  useEffect(() => {
+    localStorage.setItem('books', JSON.stringify(books));
+  }, [books]);
 
+  const allBooks = [...books];
   const uniquePublishers = [...new Set(allBooks.map((b) => b.publisher))];
 
-const uniqueCategories = Array.from(
-  new Set(allBooks.map((b) => b.category).filter((c) => c && c.trim() !== ''))
-);
-
+  const uniqueCategories = Array.from(
+    new Set(allBooks.map((b) => b.category).filter((c) => c && c.trim() !== ''))
+  );
 
   const filteredBooks = allBooks.filter(
     (book) =>
@@ -56,7 +60,7 @@ const uniqueCategories = Array.from(
           filters={[
             {
               label: 'Category',
-              options: uniqueCategories,
+              options: ['All', ...uniqueCategories],
               selected: category,
               onChange: setCategory,
             },
