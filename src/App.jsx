@@ -13,23 +13,27 @@ function App() {
 
   const [selectedBookId, setSelectedBookId] = useState(null);
   const [publisher, setPublisher] = useState('All');
-  const [category, setCategory] = useState('All');
+  const [language, setLanguage] = useState('All');
 
   useEffect(() => {
     localStorage.setItem('books', JSON.stringify(books));
   }, [books]);
 
   const allBooks = [...books];
-  const uniquePublishers = [...new Set(allBooks.map((b) => b.publisher))];
 
-  const uniqueCategories = Array.from(
-    new Set(allBooks.map((b) => b.category).filter((c) => c && c.trim() !== ''))
-  );
+  const uniqueLanguages = Array.from(
+    new Set(
+      allBooks
+        .map((b) => b.language)
+        .filter((l) => l && l.trim() !== '' && l.trim().toLowerCase() !== 'all')
+    )
+);
+
 
   const filteredBooks = allBooks.filter(
     (book) =>
       (publisher === 'All' || book.publisher === publisher) &&
-      (category === 'All' || book.category === category)
+      (language === 'All' || book.language === language)
   );
 
   function addBook(book) {
@@ -59,10 +63,10 @@ function App() {
         <Filter
           filters={[
             {
-              label: 'Category',
-              options: ['All', ...uniqueCategories],
-              selected: category,
-              onChange: setCategory,
+              label: 'Language',
+              options: ['All', ...uniqueLanguages],
+              selected: language,
+              onChange: setLanguage,
             },
           ]}
         />
