@@ -13,15 +13,14 @@ function App() {
   const [publisher, setPublisher] = useState('All');
   const [category, setCategory] = useState('All');
 
-  const allBooks = [...books, ...BooksData];
+  const allBooks = [...books];
+
   const uniquePublishers = [...new Set(allBooks.map((b) => b.publisher))];
 
-  const uniqueCategories = [
-  'All',
-  ...Array.from(
-    new Set(allBooks.map((b) => b.category).filter((c) => c && c.trim() !== ''))
-  ),
-];
+const uniqueCategories = Array.from(
+  new Set(allBooks.map((b) => b.category).filter((c) => c && c.trim() !== ''))
+);
+
 
   const filteredBooks = allBooks.filter(
     (book) =>
@@ -56,10 +55,10 @@ function App() {
         <Filter
           filters={[
             {
-              label: 'Publisher',
-              options: uniquePublishers,
-              selected: publisher,
-              onChange: setPublisher,
+              label: 'Category',
+              options: uniqueCategories,
+              selected: category,
+              onChange: setCategory,
             },
           ]}
         />
@@ -70,7 +69,7 @@ function App() {
         </Modal>
 
         <div className="book-list">
-          {books.map((book) => (
+          {filteredBooks.map((book) => (
             <div
               key={book.id}
               className={`book ${selectedBookId === book.id ? 'selected' : ''}`}
