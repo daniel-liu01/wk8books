@@ -27,8 +27,7 @@ function App() {
         .map((b) => b.language)
         .filter((l) => l && l.trim() !== '' && l.trim().toLowerCase() !== 'all')
     )
-);
-
+  );
 
   const filteredBooks = allBooks.filter(
     (book) =>
@@ -64,7 +63,7 @@ function App() {
           filters={[
             {
               label: 'Language',
-              options: ['All', ...uniqueLanguages],
+              options: uniqueLanguages, // Removed 'All' from here
               selected: language,
               onChange: setLanguage,
             },
